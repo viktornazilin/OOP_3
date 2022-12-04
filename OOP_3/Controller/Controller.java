@@ -29,11 +29,10 @@ public class Controller {
         userView.sendOnConsoleTeachers(teachers);
         return teacher;
     }
-    public StudyGroup createStudyGroup(Teacher teacher, List<Student> studentList){
-        StudyGroup studyGroup = studyGroupService.createStudyGroup(teacher,studentList);
+    public void createStudyGroup(Teacher teacher, List<Student> studentList){
+        studyGroupService.createStudyGroup(teacher,studentList);
         List<StudyGroup> studyGroups = studyGroupService.getStudyGroups();
         studyGroupView.sendOnConsoleStudyGroups(studyGroups);
-        return studyGroup;
     }
     public List<Student> getStudents(){
         List<Student> students = userService.getStudents();
@@ -44,16 +43,8 @@ public class Controller {
         List<StudyGroup> studyGroups = studyGroupService.getStudyGroups();
         studyGroupView.sendOnConsoleStudyGroups(studyGroups);
     }
-    public void sendOnConsoleSortStudents(List<Student> students){
-        students.sort((s1, s2) -> {
-            if (s1.getLastName().equalsIgnoreCase(s2.getLastName())){
-                return s1.getFirstName().compareTo(s2.getFirstName());
-            }
-            return s1.getLastName().compareTo(s2.getLastName());
-        });
+    public void sendOnConsoleSortStudyGroup(List<Student> students){
+        students.sort(studyGroupComparator);
         userView.sendOnConsoleStudents(students);
-    }
-    public void sortStudyGroup(StudyGroup studyGroup){
-        (studyGroup.getStudentList()).sort(studyGroupComparator);
     }
 }
